@@ -1,5 +1,7 @@
 class ChatMessage < ApplicationRecord
-  enum role: { user: 0, bot: 1 }
+  enum role: { user: 0, bot: 1 }, _prefix: true
+  enum status: { past: 0, placeholder: 1, completed: 2 }
+
   validates :role, presence: true
   validates :content, presence: true
 

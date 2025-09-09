@@ -1,17 +1,36 @@
-<% if msg.present? %>
-  <div class="flex <%= msg.user? ? 'justify-end' : 'justify-start' %>">
-    <div class="max-w-md px-3 py-2 rounded-xl shadow-sm
-      <%= msg.user? ? 'bg-purple-600 text-white' : 'bg-gray-700 text-gray-100' %>">
+<div id="message_<%= msg.id %>" class="flex <%= msg.role_user? ? 'justify-end' : 'justify-start' %>">
+  <div class="max-w-md px-3 py-2 rounded-xl shadow-sm
+      <%= msg.role_user? ? 'bg-purple-600 text-white' : 'bg-gray-700 text-gray-100' %>">
 
-      <p class="text-sm leading-relaxed break-words"><%= msg.content %></p>
-
-      <% if msg.bot? && msg.sources.present? %>
-        <div class="text-[11px] text-gray-400 mt-2 italic">
-          Kaynak: <%= msg.sources.join(", ") %>
-        </div>
+    <% if msg.role_bot? %>
+      <% if msg.completed? %>
+        <p
+          data-controller="typewriter"
+          data-typewriter-content-value="<%= msg.content %>"
+          class="text-sm leading-relaxed break-words">
+        </p>
+      <% else %>
+        <p class="text-sm leading-relaxed break-words <%= 'animate-pulse' if msg.placeholder? %>">
+          <%= msg.content %>
+        </p>
       <% end %>
 
-      <p class="flex justify-end text-[11px] text-white/60 mt-1"><%= msg.created_at.strftime("%d.%m.%Y %H:%M") %></p>
-    </div>
+      <% if msg.sources.present? %>
+        <div class="text-[11px] text-gray-400 mt-2 italic">
+          Kaynaklar:
+          <ul class="list-disc list-inside ml-2 mt-2">
+            <% msg.sources.each do |source| %>
+              <li><%= source %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-sm leading-relaxed break-words"><%= msg.content %></p>
+    <% end %>
+
+    <p class="flex justify-end text-[11px] text-white/60 mt-1">
+      <%= msg.created_at.strftime("%d.%m.%Y %H:%M") %>
+    </p>
   </div>
-<% end %>
+</div>

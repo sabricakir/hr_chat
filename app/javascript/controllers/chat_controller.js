@@ -30,4 +30,19 @@ export default class extends Controller {
   autoScrollOnTyping() {
     this.scrollToBottom()
   }
+
+  lockInput() {
+    if (this.hasInputTarget) {
+      this.inputTarget.value = ""
+      this.inputTarget.readOnly = true
+    }
+  }
+
+  unlockInput() {
+    if (this.hasInputTarget) {
+      this.inputTarget.readOnly = false
+      this.inputTarget.focus()
+      this.scrollToBottom()
+    }
+  }
 }

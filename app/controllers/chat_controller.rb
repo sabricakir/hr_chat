@@ -9,49 +9,46 @@ class ChatController < ApplicationController
     user_message = params[:message]
     return if user_message.blank?
 
-    # answer_data = OllamaService.answer_with_context(user_message)
+    user_msg = ChatMessage.create!(
+      chat_id: @chat_id,
+      role: :user,
+      content: user_message
+    )
+    broadcast(user_msg)
 
-    answer_data = {
-      answer: "Bu bir yanıt.",
-      sources: ["source1", "source2"],
-      snippets: ["snippet1", "snippet2"]
-    }
+    placeholder = ChatMessage.create!(
+      chat_id: @chat_id,
+      role: :bot,
+      content: "🤔 düşünüyor...",
+      status: :placeholder
+    )
+    broadcast(placeholder)
 
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.append(
-            "messages",
-            partial: "chat/message",
-            locals: { msg: ChatMessage.create!(
-              chat_id: @chat_id,
-              role: :user,
-              content: user_message
-              )
-            }
-          ),
-          turbo_stream.append(
-            "messages",
-            partial: "chat/message",
-            locals: {
-              msg: ChatMessage.create!(
-                chat_id: @chat_id,
-                role: :bot,
-                content: answer_data[:answer],
-                sources: answer_data[:sources]
-              )
-            }
-          )
-        ]
-      end
+    answer_data = OllamaService.answer_with_context(user_message)
+    placeholder.update!(
+      content: answer_data[:answer],
+      sources: answer_data[:sources],
+      status: :completed
+    )
+    broadcast(placeholder, replace: true)
 
-      format.html { redirect_to root_path }
-    end
+    placeholder.past!
   end
 
   private
 
   def set_chat_id
     @chat_id = session.id.to_s
+  end
+
+  def broadcast(msg, replace: false)
+    method = replace ? :broadcast_replace_to : :broadcast_append_to
+    Turbo::StreamsChannel.public_send(
+      method,
+      @chat_id,
+      target: replace ? "message_#{msg.id}" : "messages",
+      partial: "chat/message",
+      locals: { msg: msg }
+    )
   end
 end

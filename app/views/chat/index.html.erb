@@ -83,6 +83,7 @@
     <h1 class="text-3xl font-bold mb-4 text-center text-purple-500">HR Chat</h1>
 
     <div id="messages"
+         data-chat-id="<%= @chat_id %>"
          data-chat-target="messages"
          data-action="turbo:before-stream-render->chat#scrollOnAppend"
          class="flex-1 overflow-y-auto mb-4 space-y-4 px-2">
@@ -93,7 +94,7 @@
 
     <%= form_with url: chat_index_path, method: :post,
           data: { turbo_frame: "messages",
-                  action: "turbo:submit-end->chat#clearInput keyup->chat#autoScrollOnTyping" },
+                  action: "turbo:before-fetch-request->chat#lockInput turbo:submit-end->chat#unlockInput keyup->chat#autoScrollOnTyping" },
           class: "flex space-x-2" do |f| %>
       <%= f.text_field :message, placeholder: "Sorunuzu yazın...",
             data: { chat_target: "input" },
