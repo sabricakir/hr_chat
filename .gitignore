@@ -37,6 +37,7 @@
 !/lib/power_bi/.keep
 /lib/power_bi/*
 /public/assets/*
+/app/assets/builds/*
 
 /node/node_modules
 /node/api

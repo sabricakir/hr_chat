@@ -1,0 +1,105 @@
+<div class="flex h-screen bg-gray-900 text-white">
+  <aside class="w-80 bg-gray-800 p-6 overflow-y-auto">
+    <div class="bg-purple-900/40 border border-purple-500 rounded-lg p-4 mb-6 text-sm text-gray-200">
+      <p>
+        Bu yapay zeka sadece kendisine verilen İnsan Kaynakları dokümanları ile
+        beslenmiştir ve bu dokümanlara uygun cevaplar üretir.
+      </p>
+    </div>
+
+    <h2 class="text-2xl font-bold text-purple-400 mb-4">Örnek Sorular</h2>
+    <p class="text-sm text-gray-300 mb-6">
+      Aşağıdaki örnek soruları deneyebilirsiniz:
+    </p>
+
+    <div class="space-y-6 text-sm">
+      <div>
+        <h3 class="font-semibold text-purple-300 mb-2">Bordro Ücretlendirme</h3>
+        <ul class="space-y-1 text-gray-300 list-disc list-inside">
+          <li>Maaşlar hangi tarihte yatırılıyor?</li>
+          <li>Fazla mesai ücretleri ne zaman ödenir?</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-purple-300 mb-2">İşe Giriş</h3>
+        <ul class="space-y-1 text-gray-300 list-disc list-inside">
+          <li>İşe başlamak için hangi evrakları teslim etmeliyim?</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-purple-300 mb-2">Yıllık İzin</h3>
+        <ul class="space-y-1 text-gray-300 list-disc list-inside">
+          <li>Yıllık izin hakkım ne kadar?</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-purple-300 mb-2">Performans Değerlendirme</h3>
+        <ul class="space-y-1 text-gray-300 list-disc list-inside">
+          <li>Performans değerlendirmeleri ne zaman yapılıyor?</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-purple-300 mb-2">Fazla Mesai</h3>
+        <ul class="space-y-1 text-gray-300 list-disc list-inside">
+          <li>Fazla mesai nasıl hesaplanıyor?</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-purple-300 mb-2">Yan Haklar</h3>
+        <ul class="space-y-1 text-gray-300 list-disc list-inside">
+          <li>Yemek yardımı nasıl sağlanıyor?</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-purple-300 mb-2">İzin Türleri</h3>
+        <ul class="space-y-1 text-gray-300 list-disc list-inside">
+          <li>Mazeret izni kaç gün verilir?</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-purple-300 mb-2">İletişim ve Şikayet</h3>
+        <ul class="space-y-1 text-gray-300 list-disc list-inside">
+          <li>Şikayetimi nereye iletebilirim?</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-semibold text-purple-300 mb-2">İşten Ayrılma</h3>
+        <ul class="space-y-1 text-gray-300 list-disc list-inside">
+          <li>İstifamı nasıl bildirebilirim?</li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+
+  <div data-controller="chat" class="flex flex-col flex-1 p-6">
+    <h1 class="text-3xl font-bold mb-4 text-center text-purple-500">HR Chat</h1>
+
+    <div id="messages"
+         data-chat-target="messages"
+         data-action="turbo:before-stream-render->chat#scrollOnAppend"
+         class="flex-1 overflow-y-auto mb-4 space-y-4 px-2">
+      <%= turbo_frame_tag "messages" do %>
+        <%= render partial: "message", collection: @messages, as: :msg %>
+      <% end %>
+    </div>
+
+    <%= form_with url: chat_index_path, method: :post,
+          data: { turbo_frame: "messages",
+                  action: "turbo:submit-end->chat#clearInput keyup->chat#autoScrollOnTyping" },
+          class: "flex space-x-2" do |f| %>
+      <%= f.text_field :message, placeholder: "Sorunuzu yazın...",
+            data: { chat_target: "input" },
+            class: "flex-1 border border-gray-600 bg-gray-800 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-purple-500" %>
+      <%= f.submit "Gönder", class: "bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 shadow-md" %>
+    <% end %>
+  </div>
+</div>
+

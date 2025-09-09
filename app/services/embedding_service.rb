@@ -1,3 +1,6 @@
+require "net/http"
+require "json"
+
 class EmbeddingService
   API_URL = "http://localhost:11434/v1/embeddings"
   MODEL = "nomic-embed-text:latest"

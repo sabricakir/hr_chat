@@ -1,0 +1,17 @@
+<% if msg.present? %>
+  <div class="flex <%= msg.user? ? 'justify-end' : 'justify-start' %>">
+    <div class="max-w-md px-3 py-2 rounded-xl shadow-sm
+      <%= msg.user? ? 'bg-purple-600 text-white' : 'bg-gray-700 text-gray-100' %>">
+
+      <p class="text-sm leading-relaxed break-words"><%= msg.content %></p>
+
+      <% if msg.bot? && msg.sources.present? %>
+        <div class="text-[11px] text-gray-400 mt-2 italic">
+          Kaynak: <%= msg.sources.join(", ") %>
+        </div>
+      <% end %>
+
+      <p class="flex justify-end text-[11px] text-white/60 mt-1"><%= msg.created_at.strftime("%d.%m.%Y %H:%M") %></p>
+    </div>
+  </div>
+<% end %>
