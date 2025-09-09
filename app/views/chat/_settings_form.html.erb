@@ -1,0 +1,61 @@
+<h2 class="text-xl font-bold text-purple-400 mb-4">Ayarlar</h2>
+
+<%= form_with url: settings_chat_index_path, method: :post, local: true, class: "space-y-4" do |f| %>
+  <div>
+    <%= f.label :llm_model, class: "block text-sm font-bold mb-1 text-gray-300" do %>
+      LLM Model
+    <% end %>
+    <%= f.select :llm_model,
+          options_for_select(@llm_models, @selected_llm),
+          {}, class: "w-full rounded-md bg-gray-700 text-white border-gray-600 p-2" %>
+  </div>
+
+  <div>
+    <%= f.label :embedding_model, class: "block text-sm font-bold mb-1 text-gray-300" do %>
+      Embedding Model
+    <% end %>
+    <%= f.select :embedding_model,
+          options_for_select(@embedding_models, @selected_embedding),
+          {}, class: "w-full rounded-md bg-gray-700 text-white border-gray-600 p-2" %>
+  </div>
+
+  <div>
+    <%= f.label :chunk_size, class: "block text-sm font-bold mb-1 text-gray-300" do %>
+      Chunk Size
+    <% end %>
+    <%= f.number_field :chunk_size,
+          value: @selected_chunk_size,
+          class: "w-full rounded-md bg-gray-700 text-white border-gray-600 p-2" %>
+  </div>
+
+  <div>
+    <%= f.label :overlap, class: "block text-sm font-bold mb-1 text-gray-300" do %>
+      Overlap
+    <% end %>
+    <%= f.number_field :overlap,
+          value: @selected_overlap,
+          class: "w-full rounded-md bg-gray-700 text-white border-gray-600 p-2" %>
+  </div>
+
+  <div>
+    <%= f.label :limit, class: "block text-sm font-bold mb-1 text-gray-300" do %>
+      Limit
+      <span class="text-gray-400 font-normal">(How many documents to retrieve)</span>
+    <% end %>
+    <%= f.number_field :limit,
+          value: @selected_limit,
+          class: "w-full rounded-md bg-gray-700 text-white border-gray-600 p-2" %>
+  </div>
+
+  <div>
+    <%= f.label :top_chunks, class: "block text-sm font-bold mb-1 text-gray-300" do %>
+      Top Chunks
+      <span class="text-gray-400 font-normal">(How many chunks to consider for answer)</span>
+    <% end %>
+    <%= f.number_field :top_chunks,
+          value: @selected_top_chunks,
+          class: "w-full rounded-md bg-gray-700 text-white border-gray-600 p-2" %>
+  </div>
+
+  <%= f.submit "Kaydet", class: "w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg shadow cursor-pointer" %>
+<% end %>

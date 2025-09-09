@@ -1,0 +1,15 @@
+<div id="feedback_<%= msg.id %>" class="mt-2 flex space-x-2 justify-end items-center text-sm">
+  <%= button_to feedback_chat_index_path(message_id: msg.id, liked: true),
+        method: :post, form: { data: { turbo_stream: true } },
+        class: "flex items-center justify-center w-8 h-8 rounded-full hover:bg-green-100 transition-colors duration-150 cursor-pointer",
+        title: "Beğendim" do %>
+    <span class="text-green-500 text-lg">👍</span>
+  <% end %>
+
+  <%= button_to feedback_chat_index_path(message_id: msg.id, liked: false),
+        method: :post, form: { data: { turbo_stream: true } },
+        class: "flex items-center justify-center w-8 h-8 rounded-full hover:bg-red-100 transition-colors duration-150 cursor-pointer",
+        title: "Beğenmedim" do %>
+    <span class="text-red-500 text-lg">👎</span>
+  <% end %>
+</div>

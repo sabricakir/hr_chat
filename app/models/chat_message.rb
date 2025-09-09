@@ -6,4 +6,10 @@ class ChatMessage < ApplicationRecord
   validates :content, presence: true
 
   scope :for_chat, -> (chat_id) { where(chat_id: chat_id).order(:created_at) }
+
+  has_one :feedback, class_name: "ChatFeedback"
+
+  def feedback_given?
+    feedback.present?
+  end
 end

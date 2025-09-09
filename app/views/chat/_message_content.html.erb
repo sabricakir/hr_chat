@@ -1,0 +1,29 @@
+<% if msg.role_bot? %>
+  <% if msg.past? || msg.completed? %>
+    <p class="text-sm leading-relaxed break-words <%= 'opacity-60 animate-pulse' if msg.placeholder? %>"
+       <%= "data-controller='typewriter' data-typewriter-content-value='#{msg.content}'" if msg.completed? %>>
+      <%= msg.content %>
+    </p>
+
+    <% if msg.sources.present? %>
+      <div class="text-xs text-gray-400 mt-2 italic bg-gray-900/20 p-2 rounded">
+        Kaynaklar:
+        <ul class="list-disc list-inside ml-4 mt-1">
+          <% msg.sources.each do |source| %>
+            <li><%= source %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <% if msg.past? && !msg.feedback_given? %>
+      <%= render partial: "chat/message_feedback", locals: { msg: msg } %>
+    <% end %>
+  <% else %>
+    <p class="text-sm leading-relaxed break-words <%= 'opacity-60 animate-pulse' if msg.placeholder? %>">
+      <%= msg.content %>
+    </p>
+  <% end %>
+<% else %>
+  <p class="text-sm leading-relaxed break-words"><%= msg.content %></p>
+<% end %>
