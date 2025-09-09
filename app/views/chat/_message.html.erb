@@ -5,8 +5,11 @@
 
     <%= render partial: "chat/message_content", locals: { msg: msg } %>
 
-    <p class="text-[10px] text-white/60 mt-1 text-right">
-      <%= msg.created_at.strftime("%d.%m.%Y %H:%M") %>
+    <p class="text-[12px] text-white/60 mt-1 text-right flex flex-col items-end">
+      <span><%= msg.created_at.strftime("%d.%m.%Y %H:%M") %></span>
+      <% if msg.response_time_ms.present? %>
+        <span class="text-gray-400"><%= msg.response_time_ms %> ms</span>
+      <% end %>
     </p>
   </div>
 </div>

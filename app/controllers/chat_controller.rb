@@ -7,6 +7,8 @@ class ChatController < ApplicationController
   end
 
   def create
+    start_time = Time.current
+
     user_message = params[:message]
     return if user_message.blank?
 
@@ -41,6 +43,11 @@ class ChatController < ApplicationController
       sources: answer_data[:sources],
       status: :completed
     )
+
+    end_time = Time.current
+    duration = ((end_time - start_time) * 1000).round
+
+    placeholder.update!(response_time_ms: duration)
     broadcast(placeholder, replace: true)
 
     placeholder.past!
