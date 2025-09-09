@@ -1,7 +1,10 @@
 <% if msg.role_bot? %>
   <% if msg.past? || msg.completed? %>
     <p class="text-sm leading-relaxed break-words <%= 'opacity-60 animate-pulse' if msg.placeholder? %>"
-       <%= "data-controller='typewriter' data-typewriter-content-value='#{msg.content}'" if msg.completed? %>>
+      <% if msg.completed? %>
+        data-controller="typewriter"
+        data-typewriter-content-value="<%= msg.content %>"
+      <% end %>>
       <%= msg.content %>
     </p>
 
@@ -16,7 +19,7 @@
       </div>
     <% end %>
 
-    <% if msg.past? && !msg.feedback_given? %>
+    <% if (msg.past? || msg.completed?) && !msg.feedback_given? %>
       <%= render partial: "chat/message_feedback", locals: { msg: msg } %>
     <% end %>
   <% else %>

@@ -32,7 +32,8 @@ class ChatController < ApplicationController
       chunk_size: @selected_chunk_size,
       overlap: @selected_overlap,
       limit: @selected_limit,
-      top_chunks: @selected_top_chunks
+      top_chunks: @selected_top_chunks,
+      load_documents: @load_documents
     )
 
     placeholder.update!(
@@ -46,6 +47,7 @@ class ChatController < ApplicationController
   end
 
   def settings
+    session[:load_documents]  = params[:chunk_size].eql?(session[:chunk_size].to_s) ? false : true
     session[:llm_model]       = params[:llm_model]
     session[:embedding_model] = params[:embedding_model]
     session[:chunk_size]      = params[:chunk_size].presence&.to_i || 500
@@ -122,5 +124,6 @@ class ChatController < ApplicationController
     @selected_overlap    = session[:overlap]         || 50
     @selected_limit      = session[:limit]           || 20
     @selected_top_chunks = session[:top_chunks]      || 5
+    @load_documents      = session[:load_documents]  || false
   end
 end
