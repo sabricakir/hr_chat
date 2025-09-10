@@ -8,7 +8,7 @@
     <p class="text-[12px] text-white/60 mt-1 text-right flex flex-col items-end">
       <span><%= msg.created_at.strftime("%d.%m.%Y %H:%M") %></span>
       <% if msg.response_time_ms.present? %>
-        <span class="text-gray-400"><%= msg.response_time_ms %> ms</span>
+        <span class="text-gray-400"><%= (msg.response_time_ms / 1000.0).round(2) %> s</span>
       <% end %>
     </p>
   </div>

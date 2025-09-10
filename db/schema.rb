@@ -10,10 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_09_09_142011) do
+ActiveRecord::Schema[7.1].define(version: 2025_09_10_072631) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "vector"
+
+  create_table "benchmark_results", force: :cascade do |t|
+    t.string "query", null: false
+    t.text "answer", null: false
+    t.string "llm_model", null: false
+    t.string "embedding_model", null: false
+    t.integer "chunk_size"
+    t.integer "overlap"
+    t.integer "limit"
+    t.integer "top_chunks"
+    t.integer "response_time_ms"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "chat_feedbacks", force: :cascade do |t|
     t.string "chat_id"
@@ -41,9 +55,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_09_09_142011) do
     t.integer "status", default: 0, null: false
     t.integer "response_time_ms"
   end
-
-# Could not dump table "documents" because of following StandardError
-#   Unknown type 'vector(768)' for column 'embedding'
 
   add_foreign_key "chat_feedbacks", "chat_messages"
 end

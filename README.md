@@ -16,6 +16,10 @@ Bu proje, **Ruby on Rails 7.1** tabanlı bir chat uygulamasıdır ve **RAG (Retr
   - Top chunks
   Bu parametreleri anlık olarak değiştirebilirsiniz.
 - **Feedback Loglama**: Kullanıcıların beğeni/tepki durumlarını kaydederek hangi ayarların daha etkili olduğunu analiz edebilirsiniz.
+- **Benchmark / Performans Analizi**:
+  - Farklı LLM ve embedding kombinasyonlarının doğruluk ve yanıt sürelerini karşılaştırabilirsiniz.
+  - Chunk size, overlap, limit, top chunks gibi parametreleri değiştirerek performansı test edebilirsiniz.
+  - Gerçek zamanlı feedback ile hangi ayarların daha etkili olduğunu görebilirsiniz.
 - **pgvector Desteği**:
   Belgelerin embedding’leri PostgreSQL üzerinde `vector(768)` tipiyle saklanır. Bu sayede embedding tabanlı arama ve RAG işlemleri verimli çalışır.
 - **Belge Yönetimi**: PDF formatındaki belgeler `storage/documents` klasöründen okunur, parçalara bölünür ve embedding’leri oluşturulur.
