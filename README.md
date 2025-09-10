@@ -1,6 +1,6 @@
-# HR Chat (RAG System)
+# HR Chat (RAG)
 
-Bu proje, **Ruby on Rails 7.1** tabanlı bir chat uygulamasıdır ve **RAG (Retrieval-Augmented Generation)** yaklaşımını kullanır. Belgelerden bilgi alıp cevap oluşturabilir, kullanıcı geri bildirimlerini toplayabilir ve parametreleri dinamik olarak yönetebilirsiniz.
+Bu proje, **Ruby on Rails** tabanlı bir chat uygulamasıdır ve **RAG (Retrieval-Augmented Generation)** yaklaşımını kullanır. Belgelerden bilgi alıp cevap oluşturabilir, kullanıcı geri bildirimlerini toplayabilir ve parametreleri dinamik olarak yönetebilirsiniz.
 
 ---
 
@@ -73,8 +73,8 @@ Controller tarafında bu modeller:
 ### 1. Repo’yu klonlayın:
 
 ```bash
-git clone <repo-url>
-cd <repo-name>
+git clone https://github.com/sabricakir/hr_chat.git
+cd hr_chat
 ```
 
 ### 2. Ruby ortamını kurun (rbenv veya rvm önerilir):
