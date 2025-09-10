@@ -2,6 +2,7 @@ require "pg"
 require "pgvector"
 
 class PgConnectionService
+  # Provides a PostgreSQL connection with vector type enabled
   def self.conn
     @conn ||= begin
       conn = PG.connect(dbname: "hr_chatbot_development", user: ENV["DB_USER"])

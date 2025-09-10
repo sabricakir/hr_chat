@@ -2,6 +2,7 @@ class DocumentLoaderService
   DOCUMENTS_PATH = Rails.root.join("storage/documents")
 
   class << self
+    # Loads all PDF documents, splits them into chunks, generates embeddings, and inserts into the database
     def load_all(chunk_size: 500, overlap: 50)
       Dir.glob("#{DOCUMENTS_PATH}/*.pdf").each do |file_path|
         filename = File.basename(file_path)
@@ -20,6 +21,7 @@ class DocumentLoaderService
       end
     end
 
+    # Returns the nearest documents based on the given embedding
     def nearest_documents(query_embedding, limit: 5)
       conn = ActiveRecord::Base.connection.raw_connection
       results = conn.exec_params(
@@ -31,11 +33,13 @@ class DocumentLoaderService
 
     private
 
+    # Reads a PDF file and returns its text content
     def read_pdf(path)
       reader = PDF::Reader.new(path)
       reader.pages.map(&:text).join("\n")
     end
 
+    # Splits text into chunks based on chunk_size and overlap
     def chunk_text(text, chunk_size: 500, overlap: 50)
       chunks = []
       start = 0
