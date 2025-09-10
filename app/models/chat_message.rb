@@ -7,7 +7,7 @@ class ChatMessage < ApplicationRecord
 
   scope :for_chat, -> (chat_id) { where(chat_id: chat_id).order(:created_at) }
 
-  has_one :feedback, class_name: "ChatFeedback"
+  has_one :feedback, class_name: "ChatFeedback", dependent: :destroy
 
   def feedback_given?
     feedback.present?
