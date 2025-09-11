@@ -35,12 +35,22 @@ export default class extends Controller {
     if (this.hasInputTarget) {
       this.inputTarget.value = ""
       this.inputTarget.readOnly = true
+      this.inputTarget.classList.add(
+        "opacity-50",
+        "cursor-not-allowed",
+        "bg-gray-700"
+      )
     }
   }
 
   unlockInput() {
     if (this.hasInputTarget) {
       this.inputTarget.readOnly = false
+      this.inputTarget.classList.remove(
+        "opacity-50",
+        "cursor-not-allowed",
+        "bg-gray-700"
+      )
       this.inputTarget.focus()
       this.scrollToBottom()
     }
